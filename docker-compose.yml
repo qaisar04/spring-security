@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  postgres:
+    container_name: security-project
+    image: postgres:14
+    environment:
+      POSTGRES_DB: security-project
+      POSTGRES_USER: qaisar
+      POSTGRES_PASSWORD: qwerty
+      PGDATA: /data/postgres
+    volumes:
+      - ./volumes/postgres-inventory:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: always
+

@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: qaisar
+    password: qwerty
+    url: jdbc:postgresql://localhost:5432/security-project
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8888
