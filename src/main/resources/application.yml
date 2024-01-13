@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: spring-security
   datasource:
     driver-class-name: org.postgresql.Driver
     username: qaisar

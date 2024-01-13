@@ -23,34 +23,17 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder.encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password(passwordEncoder.encode("user"))
-//                .roles("USER")
-//                .build();
-//        UserDetails qaisar = User.builder()
-//                .username("dariya")
-//                .password(passwordEncoder.encode("dariya"))
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(admin, user, qaisar);
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/auth/**", "/public/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(((request, response, authException) -> {
+                    response.sendRedirect("http://localhost:8888/auth/error");
+                })))
                 .build();
     }
 

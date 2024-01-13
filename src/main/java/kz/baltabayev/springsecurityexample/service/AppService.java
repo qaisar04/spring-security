@@ -3,11 +3,8 @@ package kz.baltabayev.springsecurityexample.service;
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
 import kz.baltabayev.springsecurityexample.model.Application;
-import kz.baltabayev.springsecurityexample.model.entity.User;
-import kz.baltabayev.springsecurityexample.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
