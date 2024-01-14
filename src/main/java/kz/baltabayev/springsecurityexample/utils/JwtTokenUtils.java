@@ -26,7 +26,6 @@ public class JwtTokenUtils {
     @Value("${jwt.lifetime}")
     private Duration jwtLifetime;
 
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream()
@@ -54,7 +53,6 @@ public class JwtTokenUtils {
         return extractAllClaims(token).get("roles", List.class);
     }
 
-
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(signKey())
@@ -62,7 +60,6 @@ public class JwtTokenUtils {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-
 
     private SecretKey signKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);

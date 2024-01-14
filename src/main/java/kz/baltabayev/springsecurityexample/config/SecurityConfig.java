@@ -1,7 +1,6 @@
 package kz.baltabayev.springsecurityexample.config;
 
 import kz.baltabayev.springsecurityexample.security.CustomUserDetailsService;
-import kz.baltabayev.springsecurityexample.service.UserService;
 import kz.baltabayev.springsecurityexample.utils.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -34,13 +33,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable) // пока что
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/security/**").permitAll()
-                                .anyRequest().authenticated())
+                        .requestMatchers("/security/**").permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(((request, response, authException) -> {
-                    response.sendRedirect("http://localhost:8888/auth/error"); //todo
+                    response.sendRedirect("http://localhost:8888/auth/error");
                 })))
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
