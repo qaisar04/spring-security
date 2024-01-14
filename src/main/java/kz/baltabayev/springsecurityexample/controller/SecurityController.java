@@ -27,14 +27,35 @@ public class SecurityController {
     private final CustomUserDetailsService userDetailsService;
 
     @PostMapping("/register")
-    ResponseEntity<String> register(@RequestBody UserRequest userRequest) {
+    ResponseEntity<?> register(@RequestBody UserRequest userRequest) {
+        //todo спрятать
+        if(!userRequest.getUsername().equals(userRequest.getConfirmPassword())) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApplicationError.builder()
+                            .status(HttpStatus.BAD_REQUEST.value())
+                            .message("Passwords don't match.")
+                            .build());
+        }
+
+        if(userService.findByUsername(userRequest.getUsername()).isPresent()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApplicationError.builder()
+                            .status(HttpStatus.BAD_REQUEST.value())
+                            .message("The user with the specified username exists.")
+                            .build());
+        }
+
         userService.register(userRequest);
         return ResponseEntity
                 .ok("User is saved!");
+
     }
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest authRequest) {
+        //todo спрятать
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password())

@@ -20,20 +20,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/apps")
+@RequestMapping("api/app")
 @RequiredArgsConstructor
 public class AppController {
 
     private final AppService appService;
 
     @GetMapping("/all-app")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Application> allApplications() {
         return appService.getApplicationList();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER ')")
+    @PreAuthorize("hasAnyRole('USER')")
     public Application getAppById(@PathVariable Long id) {
         return appService.applicationById(id);
     }
