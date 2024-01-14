@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -32,13 +33,13 @@ public class AppController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER ')")
     public Application getAppById(@PathVariable Long id) {
         return appService.applicationById(id);
     }
 
     @GetMapping("/v1/greetings")
-    public ResponseEntity<Map<String, String>> getGreetings() {
+    public ResponseEntity<Map<String, String>> getGreetingsV1() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         return ResponseEntity.ok()
@@ -57,4 +58,11 @@ public class AppController {
                         .formatted(userDetails.getUsername())));
     }
 
+    @GetMapping("/v3/greetings")
+    public ResponseEntity<Map<String, String>> getGreetingsV3(Principal principal) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Map.of("greeting", "hello, %s"
+                        .formatted(principal.getName())));
+    }
 }

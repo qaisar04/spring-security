@@ -8,6 +8,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/security-project
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    show-sql: true
+jwt:
+  secret: hjf203cupnacs2039r1mjkc1ascdjkfkds9sdnfasb8ica1
+  lifetime: 30m
 server:
   port: 8888

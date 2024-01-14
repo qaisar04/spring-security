@@ -1,20 +1,14 @@
 package kz.baltabayev.springsecurityexample.service;
 
-import kz.baltabayev.springsecurityexample.config.UserDetailsConfig;
 import kz.baltabayev.springsecurityexample.mapper.UserMapper;
-import kz.baltabayev.springsecurityexample.model.dto.AuthRequest;
 import kz.baltabayev.springsecurityexample.model.dto.UserRequest;
 import kz.baltabayev.springsecurityexample.model.entity.User;
+import kz.baltabayev.springsecurityexample.model.types.Role;
 import kz.baltabayev.springsecurityexample.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,15 +19,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
-
-    public void addUser(UserRequest userRequest) {
+    public void register(UserRequest userRequest) {
         User user = userMapper.toModel(userRequest);
+        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    public boolean auth(AuthRequest authRequest) {
-        //todo
-       return false;
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

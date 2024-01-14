@@ -1,8 +1,14 @@
 package kz.baltabayev.springsecurityexample.model.dto;
 
-import kz.baltabayev.springsecurityexample.model.type.Role;
+import lombok.Builder;
+import lombok.Data;
 
-public record UserRequest(String username,
-                          String password,
-                          Role role) {
+@Data
+@Builder
+public class UserRequest {
+    private String name;
+    private String username;
+    private String email;
+    private String password;
+    private String confirmPassword;
 }
