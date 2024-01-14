@@ -2,6 +2,8 @@ package kz.baltabayev.springsecurityexample.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import kz.baltabayev.springsecurityexample.model.types.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

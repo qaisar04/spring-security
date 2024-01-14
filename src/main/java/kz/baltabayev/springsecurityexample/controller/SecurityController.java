@@ -1,5 +1,6 @@
 package kz.baltabayev.springsecurityexample.controller;
 
+import jakarta.validation.Valid;
 import kz.baltabayev.springsecurityexample.model.dto.AuthRequest;
 import kz.baltabayev.springsecurityexample.model.dto.TokenResponse;
 import kz.baltabayev.springsecurityexample.model.dto.UserRequest;
@@ -19,7 +20,7 @@ public class SecurityController {
     private final UserService userService;
 
     @PostMapping("/register")
-    ResponseEntity<String> register(@RequestBody UserRequest userRequest) {
+    ResponseEntity<String> register(@Valid @RequestBody UserRequest userRequest) {
         userService.register(userRequest);
         return ResponseEntity.ok("User is saved!");
     }

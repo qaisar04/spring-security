@@ -9,7 +9,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
 jwt:
   secret: hjf203cupnacs2039r1mjkc1ascdjkfkds9sdnfasb8ica1
   lifetime: 30m
