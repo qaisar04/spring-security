@@ -25,8 +25,8 @@ public class SecurityController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok(new TokenResponse(userService.authenticate(authRequest)));
+    public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(userService.authenticate(authRequest));
     }
 
 }
