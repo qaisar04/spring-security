@@ -29,5 +29,4 @@ public class SecurityController {
     public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthRequest authRequest) {
         return ResponseEntity.ok(userService.authenticate(authRequest));
     }
-
 }

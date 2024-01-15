@@ -17,41 +17,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PasswordMismatchException.class)
     public ResponseEntity<ApplicationError> handlePasswordMismatchException(PasswordMismatchException ex) {
-        ApplicationError error = ApplicationError.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ApplicationError> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApplicationError.builder()
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .message(ex.getMessage())
-                        .build());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ApplicationError> handleInvalidCredentialsException(InvalidCredentialsException ex) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(ApplicationError.builder()
-                        .status(HttpStatus.UNAUTHORIZED.value())
-                        .message(ex.getMessage())
-                        .build());
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(ApplicationNotFoundException.class)
     public ResponseEntity<ApplicationError> handleApplicationNotFoundException(ApplicationNotFoundException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApplicationError.builder()
-                        .status(HttpStatus.UNAUTHORIZED.value())
-                        .message(ex.getMessage())
-                        .build());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -66,5 +48,12 @@ public class GlobalExceptionHandler {
         });
 
         return errors;
+    }
+
+    private ResponseEntity<ApplicationError> buildErrorResponse(HttpStatus status, String message) {
+        return ResponseEntity.status(status).body(ApplicationError.builder()
+                .status(status.value())
+                .message(message)
+                .build());
     }
 }
