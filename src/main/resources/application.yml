@@ -9,6 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  cloud:
+    consul:
+      port: 8500
+      host: localhost
+      discovery:
+        instance-id: spring-security-i1
 jwt:
   secret: hjf203cupnacs2039r1mjkc1ascdjkfkds9sdnfasb8ica1
   lifetime: 30m
